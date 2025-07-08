@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCEL BLOG - Home</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font - Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Style for the custom message box */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            display: none; /* Hidden by default */
+        }
+        .message-box button {
+            background-color: #3b82f6; /* Blue-600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .message-box button:hover {
+            background-color: #2563eb; /* Blue-700 */
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none; /* Hidden by default */
+        }
+        /* Responsive video container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem; /* rounded-md */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Modal Styles */
+        .post-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .post-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .post-modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh; /* Limit height to viewport height */
+            overflow-y: auto; /* Enable scrolling for long content */
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .post-modal-overlay.active .post-modal-content {
+            transform: translateY(0);
+        }
+        .post-modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4b5563; /* gray-600 */
+            transition: color 0.2s ease;
+        }
+        .post-modal-close-btn:hover {
+            color: #1f2937; /* gray-900 */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-700 text-white p-6 shadow-lg rounded-b-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-4xl font-extrabold mb-4 md:mb-0">
+                <a href="index.html" class="hover:text-blue-200 transition duration-300">ROCEL BLOG</a>
+            </h1>
+            <nav>
+                <ul class="flex flex-wrap justify-center md:justify-start space-x-4 md:space-x-6 text-lg">
+                    <li><a href="index.html" class="hover:text-blue-200 transition duration-300">Home</a></li>
+                    <li><a href="technology.html" class="hover:text-blue-200 transition duration-300">Technology</a></li>
+                    <li><a href="business.html" class="hover:text-blue-200 transition duration-300">Business</a></li>
+                    <li><a href="sports.html" class="hover:text-blue-200 transition duration-300">Sports</a></li>
+                    <li><a href="entertainment.html" class="hover:text-blue-200 transition duration-300">Entertainment</a></li>
+                    <li><a href="governance.html" class="hover:text-blue-200 transition duration-300">Governance</a></li>
+                    <li><a href="fashion.html" class="hover:text-blue-200 transition duration-300">Fashion</a></li>
+                    <li><a href="cosmetics.html" class="hover:text-blue-200 transition duration-300">Cosmetics</a></li>
+                    <li><a href="furniture.html" class="hover:text-blue-200 transition duration-300">Furniture</a></li>
+                    <li><a href="health.html" class="hover:text-blue-200 transition duration-300">Health</a></li>
+                    <li><a href="agriculture.html" class="hover:text-blue-200 transition duration-300">Agriculture</a></li>
+                    <li><a href="advertisement.html" class="hover:text-blue-200 transition duration-300">Advertisements</a></li>
+                    <li><a href="index.html#about" class="hover:text-blue-200 transition duration-300">About</a></li>
+                    <li><a href="index.html#contact" class="hover:text-blue-200 transition duration-300">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto p-6 md:p-8 lg:p-10">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center border-b-2 border-blue-600 pb-4">Latest Posts</h2>
+
+        <div id="latest-posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Latest posts will be loaded here by JavaScript -->
+            <p id="no-posts-message" class="col-span-full text-center text-gray-500 text-xl hidden">No posts yet. Go to the Admin Panel to add some!</p>
+        </div>
+
+        <!-- Sign Up for News Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mt-8 transform hover:scale-105 transition duration-300 ease-in-out">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">Sign Up for Our Newsletter!</h2>
+            <p class="text-gray-600 mb-4">
+                Stay updated with the latest news, articles, and exclusive content from ROCEL BLOG. Enter your email below to subscribe!
+            </p>
+            <!-- Formspree integration for newsletter: action points to your unique endpoint -->
+            <form id="newsletter-form" action="https://formspree.io/f/xldndpkj" method="POST" class="space-y-4">
+                <div>
+                    <label for="newsletter-email" class="block text-gray-700 text-sm font-bold mb-2">Email Address:</label>
+                    <input type="email" id="newsletter-email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="your.email@example.com" required>
+                </div>
+                <!-- IMPORTANT: Replace 'https://your-github-username.github.io/your-repo-name/index.html' with your actual GitHub Pages URL -->
+                <input type="hidden" name="_redirect" value="https://your-github-username.github.io/your-repo-name/index.html">
+                <button type="submit" class="bg-purple-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-purple-700 transition duration-300">Subscribe</button>
+            </form>
+        </section>
+
+        <!-- Follower Statistics Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mt-8 transform hover:scale-105 transition duration-300 ease-in-out">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">Follower Statistics</h2>
+            <p class="text-gray-600 mb-2">
+                Join our growing community!
+            </p>
+            <div class="text-center text-5xl font-extrabold text-green-600 my-4">
+                <span id="follower-count">0</span>+
+            </div>
+           
+        </section>
+
+
+        <!-- Advertising Section (Static information about advertising) -->
+        <section class="bg-white rounded-lg shadow-md p-6 mt-8 transform hover:scale-105 transition duration-300 ease-in-out">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">Advertise Your Product Here!</h2>
+            <p class="text-gray-600 mb-4">
+                Looking to reach a wider audience for your products or services? Our blog offers prime advertising space to showcase your brand. We connect with a diverse readership interested in fashion, beauty, home decor, technology, and global trends.
+            </p>
+            <p class="mb-4">
+                Whether you're launching a new product, promoting a special offer, or building brand awareness, we have flexible advertising options to suit your needs.
+            </p>
+            <p class="font-semibold text-blue-600">
+                For advertising inquiries, please <a href="index.html#contact" class="underline hover:text-blue-800">contact us</a>.
+            </p>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="bg-white rounded-lg shadow-md p-6 mt-8 transform hover:scale-105 transition duration-300 ease-in-out">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">About ROCEL BLOG</h2>
+            <p class="text-gray-600 mb-4">
+                Welcome to ROCEL BLOG, your go-to source for a wide array of engaging content! We're passionate about bringing you the latest trends, insightful reviews, and up-to-date news from various sectors.
+            </p>
+            <p class="text-gray-600 mb-4">
+                Our mission is to provide valuable information and foster a community interested in everything from cutting-edge IT innovations and stylish home decor to global affairs and the best in fashion and cosmetics. Join us on this exciting journey of discovery!
+            </p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-white rounded-lg shadow-md p-6 mt-8 transform hover:scale-105 transition duration-300 ease-in-out">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">Contact Us</h2>
+            <p class="text-gray-600 mb-4">
+                We'd love to hear from you! Whether you have questions, feedback, or partnership inquiries, feel free to reach out.
+            </p>
+            <div class="space-y-4">
+                <p class="text-gray-700">
+                    <strong>Email:</strong> <a href="mailto:hubertrocky9@gmail.com" class="text-blue-600 hover:underline">hubertrocky9@gmail.com</a>
+                </p>
+                <p class="text-gray-700">
+                    <strong>Phone:</strong> <a href="tel:+233500544866" class="text-blue-600 hover:underline">+233 500 544 866</a>
+                </p>
+                <p class="text-gray-700">
+                    <strong>Address:</strong> Accra, Pokuase
+                </p>
+                <p class="text-gray-700">
+                    <strong>Social Media:</strong>
+                    <a href="#" class="text-blue-600 hover:underline ml-2">Facebook</a> |
+                    <a href="#" class="text-blue-600 hover:underline ml-2">Twitter</a> |
+                    <a href="#" class="text-blue-600 hover:underline ml-2">Instagram</a>
+                </p>
+            </div>
+            <!-- Formspree integration for contact form: action points to your unique endpoint -->
+            <form id="contact-form" action="https://formspree.io/f/xldndpkj" method="POST" class="mt-6 space-y-4">
+                <div>
+                    <label for="contact-name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                    <input type="text" id="contact-name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name" required>
+                </div>
+                <div>
+                    <label for="contact-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                    <input type="email" id="contact-email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="your.email@example.com" required>
+                </div>
+                <div>
+                    <label for="contact-message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
+                    <textarea id="contact-message" name="message" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your message..." required></textarea>
+                </div>
+                <!-- IMPORTANT: Replace 'https://your-github-username.github.io/your-repo-name/index.html' with your actual GitHub Pages URL -->
+                <input type="hidden" name="_redirect" value="https://rocel-hubel.github.io/MY-BLOG/index.html">
+                <button type="submit" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Full Post Modal Structure -->
+    <div id="postModalOverlay" class="post-modal-overlay">
+        <div class="post-modal-content">
+            <button class="post-modal-close-btn" onclick="closePostModal()">&times;</button>
+            <h3 id="modal-post-title" class="text-3xl font-bold text-blue-700 mb-3"></h3>
+            <p id="modal-post-meta" class="text-gray-600 text-sm mb-3"></p>
+            <div id="modal-post-media" class="mb-4"></div>
+            <div id="modal-post-content" class="prose max-w-none text-gray-800"></div>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="message-box">
+        <p id="messageBoxText"></p>
+        <button onclick="hideMessageBox()">OK</button>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        // Function to show a custom message box
+        function showMessageBox(message) {
+            const messageBox = document.getElementById('messageBox');
+            const messageBoxText = document.getElementById('messageBoxText');
+            const overlay = document.getElementById('overlay');
+            messageBoxText.textContent = message;
+            messageBox.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Function to hide the custom message box
+        function hideMessageBox() {
+            document.getElementById('messageBox').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Modal functions
+        const postModalOverlay = document.getElementById('postModalOverlay');
+        const modalPostTitle = document.getElementById('modal-post-title');
+        const modalPostMeta = document.getElementById('modal-post-meta');
+        const modalPostMedia = document.getElementById('modal-post-media');
+        const modalPostContent = document.getElementById('modal-post-content');
+
+        /**
+         * Opens the full post modal with content for the given post ID.
+         * @param {string} postId - The ID of the post to display.
+         */
+        function openPostModal(postId) {
+            const posts = loadPosts();
+            const post = posts.find(p => p.id === postId);
+
+            if (post) {
+                modalPostTitle.textContent = post.title;
+                modalPostMeta.textContent = `Published on ${post.date} by ${post.author}`;
+
+                // Clear previous media and add new
+                modalPostMedia.innerHTML = '';
+                if (post.mediaType === 'image' && post.mediaUrl) {
+                    modalPostMedia.innerHTML = `<img src="${post.mediaUrl}" alt="${post.title}" class="w-full h-auto rounded-md mb-4 shadow-sm" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/333333?text=Image+Not+Found';">`;
+                } else if (post.mediaType === 'video' && post.mediaUrl) {
+                    const embedUrl = getYouTubeEmbedUrl(post.mediaUrl);
+                    modalPostMedia.innerHTML = `
+                        <div class="video-container mb-4 shadow-sm">
+                            <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    `;
+                } else {
+                    modalPostMedia.innerHTML = `<img src="https://placehold.co/800x400/cccccc/333333?text=No+Media" alt="No Media Available" class="w-full h-auto rounded-md mb-4 shadow-sm">`;
+                }
+
+                modalPostContent.innerHTML = `<p>${post.content}</p>`; // Display full content
+
+                postModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            } else {
+                showMessageBox("Post not found.");
+            }
+        }
+
+        /**
+         * Closes the full post modal.
+         */
+        function closePostModal() {
+            postModalOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const latestPostsContainer = document.getElementById('latest-posts-container');
+            const noPostsMessage = document.getElementById('no-posts-message');
+
+            // Set initial follower count (manually update this number)
+            document.getElementById('follower-count').textContent = '123'; // Example: Set your initial follower count here
+
+            const allTopics = ['technology', 'business', 'sports', 'entertainment', 'governance', 'fashion', 'cosmetics', 'furniture', 'advertisement', 'health', 'agriculture'];
+
+            /**
+             * Loads blog posts from localStorage.
+             * @returns {Array} An array of blog post objects.
+             */
+            function loadPosts() {
+                try {
+                    const posts = localStorage.getItem('blogPosts');
+                    return posts ? JSON.parse(posts) : [];
+                } catch (e) {
+                    console.error("Error loading posts from localStorage:", e);
+                    showMessageBox("Error loading posts. Your browser might not support localStorage or there's corrupted data.");
+                    return [];
+                }
+            }
+
+            /**
+             * Converts a standard YouTube watch URL to an embed URL.
+             * @param {string} url - The YouTube URL.
+             * @returns {string} The embeddable YouTube URL or original URL if not YouTube.
+             */
+            function getYouTubeEmbedUrl(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                if (match && match[2].length === 11) {
+                    return `https://www.youtube.com/embed/${match[2]}?rel=0`; // rel=0 prevents related videos
+                }
+                return url; // Return original URL if not a standard YouTube link
+            }
+
+            /**
+             * Creates and appends a blog post article element.
+             * @param {Object} post - The post data.
+             * @returns {HTMLElement} The created article element.
+             */
+            function createPostArticle(post) {
+                const article = document.createElement('article');
+                article.className = 'bg-white rounded-lg shadow-md p-6 mb-6 transform hover:scale-105 transition duration-300 ease-in-out';
+
+                let mediaHtml = '';
+                if (post.mediaType === 'image' && post.mediaUrl) {
+                    mediaHtml = `<img src="${post.mediaUrl}" alt="${post.title}" class="w-full h-auto rounded-md mb-4 shadow-sm" onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/333333?text=Image+Not+Found';">`;
+                } else if (post.mediaType === 'video' && post.mediaUrl) {
+                    const embedUrl = getYouTubeEmbedUrl(post.mediaUrl);
+                    mediaHtml = `
+                        <div class="video-container mb-4 shadow-sm">
+                            <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    `;
+                } else {
+                    // Fallback if no valid mediaType or mediaUrl
+                    mediaHtml = `<img src="https://placehold.co/800x400/cccccc/333333?text=No+Media" alt="No Media Available" class="w-full h-auto rounded-md mb-4 shadow-sm">`;
+                }
+
+                article.innerHTML = `
+                    <h3 class="text-2xl font-bold text-blue-700 mb-3">${post.title}</h3>
+                    <p class="text-gray-600 text-sm mb-3">Published on ${post.date} by ${post.author}</p>
+                    ${mediaHtml}
+                    <div class="prose max-w-none">
+                        <p class="mb-4">${post.content.substring(0, 250)}...</p>
+                    </div>
+                    <button onclick="openPostModal('${post.id}')" class="inline-block mt-4 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Read More</button>
+                `;
+                return article;
+            }
+
+            /**
+             * Displays a limited number of latest posts on the home page.
+             */
+            function displayLatestPosts() {
+                const posts = loadPosts();
+                latestPostsContainer.innerHTML = ''; // Clear existing posts
+
+                if (posts.length === 0) {
+                    noPostsMessage.classList.remove('hidden');
+                    return;
+                } else {
+                    noPostsMessage.classList.add('hidden');
+                }
+
+                // Sort all posts by date in descending order (newest first)
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                // Display only the top 6 latest posts on the home page
+                const postsToDisplay = posts.slice(0, 6);
+
+                postsToDisplay.forEach(post => {
+                    latestPostsContainer.appendChild(createPostArticle(post));
+                });
+            }
+
+            displayLatestPosts();
+        });
+    </script>
+</body>
+</html>
